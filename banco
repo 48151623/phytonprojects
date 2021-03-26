@@ -1,0 +1,43 @@
+class Cliente:
+    _total_clientes = 0
+    __slots__ = ['_nome','_sobrenome','_cpf']
+    def __init__(self,nome,sobrenome,cpf):
+        self._nome = nome
+        self._sobrenome = sobrenome
+        self._cpf = cpf
+        Cliente._total_clientes += 1
+    @classmethod
+    def get_total_clientes(cls):
+        return print(cls._total_clientes)
+
+class Conta:
+
+    __slots__ = ['_numero','_titular','_saldo']
+    def __init__(self,numero,titular,saldo):
+        self._numero = numero
+        self._titular = titular
+        self._saldo = saldo
+
+    def deposita (self,valor):
+        self._saldo += valor
+        return print(f'deposito de {valor} \nnovo saldo de {self._saldo}')
+
+    def saca (self, valor):
+        if (valor > self._saldo):
+            print ('saldo insuficiente')
+            return False
+        else:
+            self._saldo -= valor
+            print(f'saque de {valor} \n novo saldo {self._saldo}')
+            return True
+
+    def extrato(self):
+        print ('conta {}\n saldo de {}'.format(self._numero,self._saldo))
+
+    def transfere_para(self,destino,valor):
+        t = self.saca(valor)
+        if (t == False):
+            return False
+        else:
+            destino.deposita(valor)
+            return True
